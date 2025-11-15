@@ -57,7 +57,8 @@ public class AplikasiCatatanHarianFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Isi Catatan :");
 
-        jButton1.setForeground(new java.awt.Color(255, 0, 51));
+        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Keluar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,6 +66,8 @@ public class AplikasiCatatanHarianFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(255, 0, 51));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Hapus");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +75,7 @@ public class AplikasiCatatanHarianFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setForeground(new java.awt.Color(0, 51, 255));
+        jButton3.setBackground(new java.awt.Color(51, 255, 51));
         jButton3.setText("Edit");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +83,7 @@ public class AplikasiCatatanHarianFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setForeground(new java.awt.Color(0, 204, 51));
+        jButton4.setBackground(new java.awt.Color(51, 255, 0));
         jButton4.setText("Tambah");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +104,8 @@ public class AplikasiCatatanHarianFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton5.setBackground(new java.awt.Color(0, 51, 255));
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Save File");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +113,8 @@ public class AplikasiCatatanHarianFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setBackground(new java.awt.Color(0, 0, 255));
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Load File");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,18 +217,33 @@ public class AplikasiCatatanHarianFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow != -1) {
-            String judul = (String) tableModel.getValueAt(selectedRow, 0);
-            String isi = (String) tableModel.getValueAt(selectedRow, 1);
+       int selectedRow = jTable1.getSelectedRow();
+    
+    // Pastikan ada baris yang dipilih
+    if (selectedRow != -1) {
+        // Ambil data dari kolom yang dipilih
+        String judul = (String) tableModel.getValueAt(selectedRow, 0);
+        String isi = (String) tableModel.getValueAt(selectedRow, 1);
 
-            jTextField1.setText(judul);
-            jTextField2.setText(isi);
+        // Set data yang dipilih ke dalam textfield untuk edit
+        jTextField1.setText(judul);
+        jTextField2.setText(isi);
 
-            // Mengupdate baris dengan nilai baru
-            tableModel.setValueAt(jTextField1.getText(), selectedRow, 0);
-            tableModel.setValueAt(jTextField2.getText(), selectedRow, 1);
-        }
+        // Setelah edit, update baris yang dipilih dengan nilai baru
+        jButton3.addActionListener(evt1 -> {
+            String newJudul = jTextField1.getText();
+            String newIsi = jTextField2.getText();
+            String tanggalWaktu = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+
+            // Update nilai pada baris yang dipilih
+            tableModel.setValueAt(newJudul, selectedRow, 0);
+            tableModel.setValueAt(newIsi, selectedRow, 1);
+            tableModel.setValueAt(tanggalWaktu, selectedRow, 2);
+        });
+    } else {
+        // Tampilkan pesan jika tidak ada baris yang dipilih
+        JOptionPane.showMessageDialog(this, "Silakan pilih catatan yang ingin diubah.");
+    }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
